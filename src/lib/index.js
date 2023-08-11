@@ -13,7 +13,7 @@ components.forEach(component => {
 
 
 ZlForm.install = function (Vue) {
-  console.log('zl');
+  // console.log('zl');
 }
 
 export default ZlForm
