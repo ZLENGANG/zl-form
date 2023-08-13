@@ -18,6 +18,7 @@
           :is="getColType(col.type)"
           :value="formData[col.key]"
           :col="col"
+          :ref="col.key"
           :slots="$scopedSlots"
           @input="setValue(col, $event)"
         />

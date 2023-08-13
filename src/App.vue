@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Form :schema="schema" :formData="data">
+    <Form :schema="schema" :formData="data" ref="formRef">
       <template #name-label="{ col }">
         <span>{{ col.label }}666</span>
       </template>
@@ -13,6 +13,10 @@
         <span>name-prepend</span>
       </template>
 
+      <template #name>
+        <span>name-prepend111</span>
+      </template>
+
       <template #age-input-append>
         <span>age-append</span>
       </template>
@@ -21,6 +25,7 @@
         <span>age-prepend</span>
       </template>
     </Form>
+
     <el-button @click="submit" type="primary">提交</el-button>
   </div>
 </template>
@@ -42,6 +47,25 @@ export default {
           key: "name",
           attrs: {
             placeholder: "placeholder",
+            "show-word-limit": true,
+            maxlength: 10,
+            clearable: true,
+          },
+          on: {
+            blur: (val, oVal) => {
+              console.log("zlzl", val, oVal);
+            },
+            clear() {
+              console.log("clear");
+            },
+          },
+          slots: {
+            append: (h) => {
+              return h("span", null, 666);
+            },
+            prepend: (h) => {
+              return h("span", null, "prepend");
+            },
           },
         },
         {
@@ -56,6 +80,9 @@ export default {
         age: 25,
       },
     };
+  },
+  created() {
+    console.log(this);
   },
   methods: {
     submit() {
