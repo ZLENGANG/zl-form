@@ -11,7 +11,7 @@
       >
         <!-- 表单字段label插槽 -->
         <template #label>
-          <slot :name="`${col.key}-label`" :col="col" />
+          <slot :name="`${col.key}-label`" :col="col"                                                                                                 />
         </template>
 
         <component
@@ -63,7 +63,7 @@ export default {
     },
 
     getColType(type) {
-      const originTags = ["input"];
+      const originTags = ["input", "select"];
       if (originTags.includes(type)) {
         return `zl-form-${type}`;
       }
