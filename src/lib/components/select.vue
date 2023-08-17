@@ -1,5 +1,10 @@
 <template>
-  <el-select v-model="newValue" placeholder="请选择" @input="handleChange">
+  <el-select
+    v-model="newValue"
+    @input="handleChange"
+    v-bind="col.attrs"
+    v-on="col.on"
+  >
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -7,24 +12,21 @@
       :value="item.value"
     >
     </el-option>
+
+    <template v-for="(render, key) of compSlot" v-slot:[getSlotKey(key)]>
+      <extend-slot :key="key" :render="render" />
+    </template>
   </el-select>
 </template>
 
 <script>
+import formMixin from "../mixins/formMixins";
 export default {
   name: "ZlFormSelect",
   abbrName: "select",
-  props: {
-    value: null,
-    col: {
-      type: Object,
-      default: () => ({}),
-    },
-    slots: null,
-  },
+  mixins: [formMixin],
   data() {
     return {
-      newValue: null,
       options: [],
     };
   },
@@ -35,17 +37,9 @@ export default {
       },
       immediate: true,
     },
-    value: {
-      handler(val) {
-        this.newValue = val;
-      },
-      immediate: true,
-    },
   },
+
   methods: {
-    handleChange(val) {
-      this.$emit("input", val);
-    },
     getOptions() {
       const { options } = this.col;
       if (options instanceof Array) {

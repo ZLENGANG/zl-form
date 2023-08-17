@@ -24,6 +24,10 @@
       <template #age-input-prepend>
         <span>age-prepend</span>
       </template>
+
+      <template #class-select-empty>
+        <span>select-prefix</span>
+      </template>
     </Form>
 
     <el-button @click="submit" type="primary">提交</el-button>
@@ -52,8 +56,8 @@ export default {
             clearable: true,
           },
           on: {
-            blur: (val, oVal) => {
-              console.log("zlzl", val, oVal);
+            blur: (e) => {
+              console.log(e.target.value, this.data.name);
             },
             clear() {
               console.log("clear");
@@ -99,13 +103,22 @@ export default {
               label: "北京烤鸭",
             },
           ],
+          attrs: {
+            clearable: true,
+            placeholder: "请选择班级",
+          },
+          on: {
+            clear() {
+              console.log("清除");
+            },
+          },
         },
       ],
 
       data: {
         name: "",
         age: 25,
-        class: "选项5",
+        class: "",
       },
     };
   },
