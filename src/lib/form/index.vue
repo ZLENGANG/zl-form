@@ -1,6 +1,6 @@
 <template>
   <div class="zl-form-container" @click="eventTarget">
-    <el-form :model="formData" ref="formRef">
+    <el-form :model="formData" ref="formRef" :rules="formRules">
       <slot name="top" />
 
       <el-form-item
@@ -11,7 +11,7 @@
       >
         <!-- 表单字段label插槽 -->
         <template #label>
-          <slot :name="`${col.key}-label`" :col="col"                                                                                                 />
+          <slot :name="`${col.key}-label`" :col="col" />
         </template>
 
         <component
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { tranToArray } from "@/lib/utils/util";
 export default {
   name: "ZlForm",
   props: {
@@ -43,6 +44,11 @@ export default {
     formData: null,
 
     formId: String,
+
+    rules: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   data() {
     return {
@@ -56,6 +62,27 @@ export default {
     } else {
       // 请求接口，获取schema
     }
+  },
+  computed: {
+    formRules() {
+      let resRules = {};
+      this.formSchema.forEach((item) => {
+        const rules = [
+          ...tranToArray(item.rules),
+          ...tranToArray(this.rules[item.key]),
+        ];
+
+        if (item.required) {
+          rules.push({
+            required: true,
+            message: `${item.label}必填！`,
+          });
+        }
+
+        resRules[item.key] = rules;
+      });
+      return resRules;
+    },
   },
   methods: {
     setValue(col, value) {
@@ -72,6 +99,23 @@ export default {
 
     eventTarget(event) {
       this.$emit("eventTarget", event);
+    },
+
+    validateForm() {
+      return new Promise((resolve, reject) => {
+        if (Object.keys(this.formRules).length > 0) {
+          this.$refs.formRef.validate((valid, invalidFields) => {
+            if (valid) {
+              resolve();
+            } else {
+              // 显示错误
+              reject(invalidFields);
+            }
+          });
+        } else {
+          resolve();
+        }
+      });
     },
   },
 };

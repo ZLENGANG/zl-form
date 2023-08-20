@@ -1,33 +1,6 @@
 <template>
   <div id="app">
-    <Form :schema="schema" :formData="data" ref="formRef">
-      <template #name-label="{ col }">
-        <span>{{ col.label }}666</span>
-      </template>
-
-      <template #name-input-append>
-        <span>name-append</span>
-      </template>
-
-      <template #name-input-prepend>
-        <span>name-prepend</span>
-      </template>
-
-      <template #name>
-        <span>name-prepend111</span>
-      </template>
-
-      <template #age-input-append>
-        <span>age-append</span>
-      </template>
-
-      <template #age-input-prepend>
-        <span>age-prepend</span>
-      </template>
-
-      <template #class-select-empty>
-        <span>select-prefix</span>
-      </template>
+    <Form :schema="schema" :formData="data" ref="testRef" :rules="rules">
     </Form>
 
     <el-button @click="submit" type="primary">提交</el-button>
@@ -44,11 +17,19 @@ export default {
   },
   data() {
     return {
+      rules: {
+        age: [{ required: true, message: "必须填写标题1" }],
+      },
       schema: [
         {
           type: "input",
           label: "姓名",
           key: "name",
+          rules: {
+            required: true,
+            type: "string",
+            message: "必须填写标题",
+          },
           attrs: {
             placeholder: "placeholder",
             "show-word-limit": true,
@@ -63,14 +44,6 @@ export default {
               console.log("clear");
             },
           },
-          slots: {
-            append: (h) => {
-              return h("span", null, 666);
-            },
-            prepend: (h) => {
-              return h("span", null, "prepend");
-            },
-          },
         },
         {
           type: "input",
@@ -81,6 +54,7 @@ export default {
           type: "select",
           label: "班级",
           key: "class",
+          required: true,
           options: [
             {
               value: "选项1",
@@ -122,12 +96,17 @@ export default {
       },
     };
   },
-  created() {
-    console.log(this);
-  },
   methods: {
     submit() {
       console.log(this.data);
+      this.$refs.testRef
+        .validateForm()
+        .then((valid) => {
+          console.log(valid);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };
