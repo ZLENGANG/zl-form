@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <Form :schema="schema" :formData="data" ref="testRef" :rules="rules">
-    </Form>
+    <Form :schema="schema" :formData="data" ref="testRef" :rules="rules"> </Form>
 
     <el-button @click="submit" type="primary">提交</el-button>
   </div>
@@ -87,12 +86,23 @@ export default {
             },
           },
         },
+        {
+          type: "radio",
+          label: "性别",
+          key: "sex",
+          required: true,
+          options: [
+            { label: "男", value: 0 },
+            { label: "女", value: 1 },
+          ],
+        },
       ],
 
       data: {
         name: "",
         age: 25,
         class: "",
+        sex: "",
       },
     };
   },

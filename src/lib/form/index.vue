@@ -67,10 +67,7 @@ export default {
     formRules() {
       let resRules = {};
       this.formSchema.forEach((item) => {
-        const rules = [
-          ...tranToArray(item.rules),
-          ...tranToArray(this.rules[item.key]),
-        ];
+        const rules = [...tranToArray(item.rules), ...tranToArray(this.rules[item.key])];
 
         if (item.required) {
           rules.push({
@@ -90,7 +87,7 @@ export default {
     },
 
     getColType(type) {
-      const originTags = ["input", "select"];
+      const originTags = ["input", "select", "radio"];
       if (originTags.includes(type)) {
         return `zl-form-${type}`;
       }

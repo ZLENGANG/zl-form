@@ -1,10 +1,5 @@
 <template>
-  <el-select
-    v-model="newValue"
-    @input="handleChange"
-    v-bind="col.attrs"
-    v-on="col.on"
-  >
+  <el-select v-model="newValue" @input="handleChange" v-bind="col.attrs" v-on="col.on">
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -25,11 +20,6 @@ export default {
   name: "ZlFormSelect",
   abbrName: "select",
   mixins: [formMixin],
-  data() {
-    return {
-      options: [],
-    };
-  },
   watch: {
     col: {
       handler(val) {
@@ -38,17 +28,7 @@ export default {
       immediate: true,
     },
   },
-
-  methods: {
-    getOptions() {
-      const { options } = this.col;
-      if (options instanceof Array) {
-        this.options = options;
-      }
-    },
-  },
 };
 </script>
 
-<style>
-</style>
+<style></style>
