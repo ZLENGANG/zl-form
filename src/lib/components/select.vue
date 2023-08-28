@@ -1,5 +1,10 @@
 <template>
-  <el-select v-model="newValue" @input="handleChange" v-bind="col.attrs" v-on="col.on">
+  <el-select
+    v-model="newValue"
+    @input="handleChange"
+    v-bind="col.attrs"
+    v-on="col.on"
+  >
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -31,4 +36,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped lang="less">
+.el-select {
+  width: 100%;
+}
+</style>

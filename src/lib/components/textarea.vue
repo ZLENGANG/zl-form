@@ -1,7 +1,7 @@
 <template>
   <el-input
-    ref="el-input"
     v-model="newValue"
+    type="textarea"
     v-bind="col.attrs"
     v-on="col.on"
     @input="handleChange"
@@ -15,8 +15,8 @@
 import formMixin from "../mixins/formMixins";
 
 export default {
-  name: "ZlFormInput",
-  abbrName: "input",
+  name: "ZlFormTextarea",
+  abbrName: "textarea",
   mixins: [formMixin],
 };
 </script>
